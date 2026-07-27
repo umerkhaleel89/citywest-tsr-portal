@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CityWest TSR Resource Portal</title>
+<style>
+:root{--citywest-blue:#128bc2;--citywest-blue-dark:#08719f;--citywest-navy:#083d59;--ink:#221e1f;--muted:#667681;--line:#dce5e9;--canvas:#f4f7f8;--panel:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",sans-serif;background:var(--canvas);color:var(--ink)}
+.topbar{background:linear-gradient(105deg,#073f5d 0%,#096f9f 52%,#128bc2 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,56px);min-height:76px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand strong{font-size:20px;font-style:italic}
+.brand-div{width:1px;height:26px;background:#ffffff40}
+.brand small{font-size:13px;font-weight:600}
+.pill{color:#ffffffd9;letter-spacing:.04em;text-transform:uppercase;border:1px solid #ffffff3d;border-radius:999px;padding:6px 12px;font-size:10px;font-weight:700}
+.search-band{background:var(--citywest-navy);padding:32px clamp(20px,4vw,56px) 36px}
+.eyebrow{color:#7fd1f2;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px;font-size:10px;font-weight:700}
+.search-band h1{color:#fff;margin:0 0 20px;font-size:clamp(24px,3vw,34px);font-weight:600;max-width:700px}
+.search-band input{width:100%;max-width:640px;padding:14px 18px;border-radius:7px;border:none;font-size:14px;box-shadow:0 5px 18px rgba(0,0,0,0.14)}
+.search-wrap{position:relative;max-width:640px}
+.search-results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--panel);border-radius:7px;box-shadow:0 12px 28px rgba(0,0,0,0.22);overflow:hidden;z-index:10;display:none}
+.search-results.open{display:block}
+.search-results a{display:block;padding:11px 16px;text-decoration:none;color:var(--ink)}
+.search-results a:hover,.search-results a.active{background:var(--canvas)}
+.search-results .r-title{font-size:13px;font-weight:600}
+.search-results .r-title mark{background:#cdeeff;color:inherit;border-radius:2px}
+.search-results .r-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.search-results .r-empty{padding:14px 16px;font-size:12px;color:var(--muted)}
+.search-results .r-disabled .r-title{color:var(--muted)}
+.search-results .r-disabled{cursor:default}
+.workspace{max-width:1400px;margin:0 auto;padding:28px clamp(20px,4vw,56px) 60px}
+.tabs{display:flex;gap:28px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.tabs span{font-size:13px;font-weight:600;color:#687983;padding-bottom:13px;cursor:pointer;user-select:none}
+.tabs span.active{color:var(--citywest-navy);border-bottom:3px solid var(--citywest-blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{position:relative;border:1px solid var(--line);border-top:4px solid var(--citywest-blue);border-radius:9px;background:var(--panel);padding:20px;box-shadow:0 8px 24px rgba(26,62,78,0.06);cursor:pointer}
+.card.hidden{display:none}
+.icon{width:34px;height:34px;background:#eaf7fc;color:var(--citywest-blue);border-radius:8px;display:grid;place-items:center;margin-bottom:14px;font-size:18px}
+.card h3{margin:0 0 6px;font-size:16px;font-weight:600;padding-right:22px}
+.card h3 a:hover{text-decoration:underline}
+.card p{margin:0;font-size:12px;color:var(--muted);line-height:1.6}
+.fav-btn{background:none;border:none;padding:2px;font-size:17px;line-height:1;color:#c3ced3;cursor:pointer;flex:none}
+.fav-btn:hover{color:#f0ad2f}
+.fav-btn.active{color:#f0ad2f}
+.empty-state{display:none;color:var(--muted);font-size:13px;padding:48px 0;text-align:center}
+.empty-state.visible{display:block}
+.fav-list{display:flex;flex-direction:column;gap:10px}
+.fav-row{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:14px 16px;box-shadow:0 8px 24px rgba(26,62,78,0.06)}
+.fav-row .doc-icon{width:34px;height:34px;background:#eaf7fc;color:var(--citywest-blue);border-radius:8px;display:grid;place-items:center;font-size:16px;flex:none}
+.fav-row .fav-info{flex:auto}
+.fav-row .fav-info a{font-size:14px;font-weight:600;color:var(--ink);text-decoration:none}
+.fav-row .fav-info a:hover{color:var(--citywest-blue-dark)}
+.fav-row .fav-info p{margin:2px 0 0;font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <strong>CityWest</strong>
+    <div class="brand-div"></div>
+    <small>TSR resource portal</small>
+  </div>
+  <span class="pill">Internal use</span>
+</div>
+
+<div class="search-band">
+  <p class="eyebrow">TSR knowledge base</p>
+  <h1>Everything you need on shift, in one place</h1>
+  <div class="search-wrap">
+    <input id="searchInput" autocomplete="off" placeholder="Search tools, devices, or troubleshooting steps" />
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<div class="workspace">
+  <div class="tabs">
+    <span class="active" data-tab="all">All sections</span>
+    <span data-tab="recent">Recently viewed</span>
+    <span data-tab="favorites">Favorites</span>
+  </div>
+
+  <div class="grid" id="cardGrid">
+    <div class="card" data-id="tools">
+      <div class="icon">🛠</div>
+      <h3>Tools</h3>
+      <p>Diagnostic apps, provisioning systems, and internal links.</p>
+    </div>
+    <div class="card" data-id="cpe">
+      <div class="icon">📡</div>
+      <h3>CPE</h3>
+      <p>Modems, routers, and set-top boxes — specs and setup guides.</p>
+    </div>
+    <div class="card" data-id="troubleshooting" data-href="troubleshooting-steps.html">
+      <div class="icon">⚠</div>
+      <h3>Troubleshooting steps</h3>
+      <p>Step-by-step flows for common connectivity issues.</p>
+    </div>
+    <div class="card" data-id="best-practices" data-href="best-service-practices.html">
+      <div class="icon">★</div>
+      <h3>Best service practices</h3>
+      <p>Call handling standards and customer communication tips.</p>
+    </div>
+    <div class="card" data-id="escalation">
+      <div class="icon">⬆</div>
+      <h3>Escalation protocols</h3>
+      <p>When and how to escalate, tiered contacts, and SLAs.</p>
+    </div>
+  </div>
+  <div class="fav-list" id="recentList" style="display:none"></div>
+  <div class="fav-list" id="favList" style="display:none"></div>
+  <p class="empty-state" id="emptyState"></p>
+</div>
+
+
+<script>
+var SEARCH_INDEX = [
+  {title:"Tools", desc:"Diagnostic apps, provisioning systems, and internal links.", url:null},
+  {title:"CPE", desc:"Modems, routers, and set-top boxes — specs and setup guides.", url:null},
+  {title:"Troubleshooting steps", desc:"Step-by-step flows for common connectivity issues.", url:"troubleshooting-steps.html"},
+  {title:"Best service practices", desc:"Call handling standards and customer communication tips.", url:"best-service-practices.html"},
+  {title:"Escalation protocols", desc:"When and how to escalate, tiered contacts, and SLAs.", url:null},
+  {title:"IPTV", desc:"Troubleshooting guide: no signal, buffering, pixelation, audio sync, app issues.", url:"iptv.html", keywords:"iptv tv streaming set-top box buffering pixelation black screen audio sync"},
+  {title:"Call handling standards", desc:"Opening, managing, and closing customer calls.", url:"call-handling-standards.html", keywords:"call handling hold documentation opening closing"},
+  {title:"Customer de-escalation", desc:"Handling frustrated customers before formal escalation.", url:"customer-deescalation.html", keywords:"deescalation escalate frustrated angry abusive supervisor"}
+];
+
+(function(){
+  var input = document.getElementById('searchInput');
+  var results = document.getElementById('searchResults');
+  var activeIndex = -1;
+  var current = [];
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; });
+  }
+
+  function highlight(text, q){
+    if(!q) return escapeHtml(text);
+    var i = text.toLowerCase().indexOf(q.toLowerCase());
+    if(i === -1) return escapeHtml(text);
+    return escapeHtml(text.slice(0,i)) + '<mark>' + escapeHtml(text.slice(i,i+q.length)) + '</mark>' + escapeHtml(text.slice(i+q.length));
+  }
+
+  function render(q){
+    current = SEARCH_INDEX.filter(function(item){
+      var hay = (item.title + ' ' + item.desc + ' ' + (item.keywords||'')).toLowerCase();
+      return hay.indexOf(q.toLowerCase()) !== -1;
+    });
+    activeIndex = -1;
+
+    if(!q){ results.classList.remove('open'); results.innerHTML=''; return; }
+
+    if(current.length === 0){
+      results.innerHTML = '<div class="r-empty">No matches for "' + escapeHtml(q) + '"</div>';
+      results.classList.add('open');
+      return;
+    }
+
+    results.innerHTML = current.map(function(item, idx){
+      var tag = item.url ? 'a href="'+item.url+'"' : 'a href="#" role="button" aria-disabled="true"';
+      var cls = item.url ? '' : ' r-disabled';
+      return '<' + tag + ' class="r-item' + cls + '" data-idx="'+idx+'">' +
+        '<div class="r-title">' + highlight(item.title, q) + '</div>' +
+        '<div class="r-desc">' + escapeHtml(item.desc) + (item.url ? '' : ' — no page yet') + '</div>' +
+        '</a>';
+    }).join('');
+    results.classList.add('open');
+
+    Array.prototype.forEach.call(results.querySelectorAll('.r-item'), function(el){
+      el.addEventListener('click', function(e){
+        var item = current[+el.getAttribute('data-idx')];
+        if(!item.url){ e.preventDefault(); }
+      });
+    });
+  }
+
+  input.addEventListener('input', function(){ render(input.value.trim()); });
+
+  input.addEventListener('keydown', function(e){
+    var items = results.querySelectorAll('.r-item');
+    if(e.key === 'ArrowDown'){
+      e.preventDefault();
+      if(items.length){ activeIndex = (activeIndex + 1) % items.length; updateActive(items); }
+    } else if(e.key === 'ArrowUp'){
+      e.preventDefault();
+      if(items.length){ activeIndex = (activeIndex - 1 + items.length) % items.length; updateActive(items); }
+    } else if(e.key === 'Enter'){
+      e.preventDefault();
+      var pick = activeIndex >= 0 ? current[activeIndex] : current[0];
+      if(pick && pick.url){ window.location.href = pick.url; }
+    } else if(e.key === 'Escape'){
+      results.classList.remove('open');
+    }
+  });
+
+  function updateActive(items){
+    Array.prototype.forEach.call(items, function(el, i){
+      el.classList.toggle('active', i === activeIndex);
+    });
+  }
+
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.search-wrap')){ results.classList.remove('open'); }
+  });
+})();
+
+(function(){
+  var grid = document.getElementById('cardGrid');
+  var cards = Array.prototype.slice.call(grid.querySelectorAll('.card'));
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tabs span'));
+  var emptyState = document.getElementById('emptyState');
+  var favList = document.getElementById('favList');
+  var recentList = document.getElementById('recentList');
+  var activeTab = 'all';
+
+  function readList(key){
+    try { return JSON.parse(localStorage.getItem(key)) || []; }
+    catch(e){ return []; }
+  }
+
+  function getRecentFiles(){ return readList('cw_recent'); }
+  function getFileFavorites(){ return readList('cw_favorites'); }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; });
+  }
+
+  function renderDocList(container, items){
+    container.innerHTML = items.map(function(item){
+      return '<div class="fav-row">' +
+        '<div class="doc-icon">📄</div>' +
+        '<div class="fav-info">' +
+          '<a href="' + escapeHtml(item.url) + '">' + escapeHtml(item.title) + '</a>' +
+          '<p>' + escapeHtml(item.desc || '') + '</p>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderTab(){
+    var recent = getRecentFiles();
+    var favs = getFileFavorites();
+
+    grid.style.display = activeTab === 'all' ? '' : 'none';
+    favList.style.display = activeTab === 'favorites' ? '' : 'none';
+    recentList.style.display = activeTab === 'recent' ? '' : 'none';
+
+    if(activeTab === 'all'){
+      emptyState.classList.remove('visible');
+      return;
+    }
+
+    if(activeTab === 'favorites'){
+      renderDocList(favList, favs);
+      emptyState.textContent = 'Star a file in a section to add it here.';
+      emptyState.classList.toggle('visible', favs.length === 0);
+      return;
+    }
+
+    if(activeTab === 'recent'){
+      renderDocList(recentList, recent);
+      emptyState.textContent = 'Files you open will show up here.';
+      emptyState.classList.toggle('visible', recent.length === 0);
+    }
+  }
+
+  tabs.forEach(function(tabEl){
+    tabEl.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      tabEl.classList.add('active');
+      activeTab = tabEl.getAttribute('data-tab');
+      renderTab();
+    });
+  });
+
+  cards.forEach(function(card){
+    card.addEventListener('click', function(){
+      var href = card.getAttribute('data-href');
+      if(href){ window.location.href = href; }
+    });
+  });
+
+  window.addEventListener('storage', function(e){
+    if((e.key === 'cw_favorites' && activeTab === 'favorites') || (e.key === 'cw_recent' && activeTab === 'recent')){ renderTab(); }
+  });
+
+  renderTab();
+})();
+</script>
+
+</body>
+</html>

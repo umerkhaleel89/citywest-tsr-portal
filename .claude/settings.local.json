@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pandoc -t markdown IPTV.docx)",
+      "PowerShell(Get-Command pandoc -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Command soffice -ErrorAction SilentlyContinue)",
+      "Bash(mkdir -p \"C:\\\\Users\\\\trogd\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-trogd-Downloads-html\\\\3e96f379-ebd4-45ca-9cee-521ecb00dedb\\\\scratchpad\\\\iptv_extract\")",
+      "Bash(unzip -o -q IPTV.docx -d \"C:\\\\Users\\\\trogd\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-trogd-Downloads-html\\\\3e96f379-ebd4-45ca-9cee-521ecb00dedb\\\\scratchpad\\\\iptv_extract\")",
+      "Bash(start firefox *)",
+      "Bash(tasklist //FI \"IMAGENAME eq firefox.exe\")"
+    ]
+  }
+}

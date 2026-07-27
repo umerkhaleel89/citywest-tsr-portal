@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Troubleshooting Steps — CityWest TSR Resource Portal</title>
+<style>
+:root{--citywest-blue:#128bc2;--citywest-blue-dark:#08719f;--citywest-navy:#083d59;--ink:#221e1f;--muted:#667681;--line:#dce5e9;--canvas:#f4f7f8;--panel:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",sans-serif;background:var(--canvas);color:var(--ink)}
+.topbar{background:linear-gradient(105deg,#073f5d 0%,#096f9f 52%,#128bc2 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,56px);min-height:76px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand strong{font-size:20px;font-style:italic}
+.brand-div{width:1px;height:26px;background:#ffffff40}
+.brand small{font-size:13px;font-weight:600}
+.pill{color:#ffffffd9;letter-spacing:.04em;text-transform:uppercase;border:1px solid #ffffff3d;border-radius:999px;padding:6px 12px;font-size:10px;font-weight:700}
+.workspace{max-width:1400px;margin:0 auto;padding:32px clamp(20px,4vw,56px) 60px}
+.breadcrumb{font-size:12px;color:var(--muted);margin-bottom:16px}
+.breadcrumb a{color:var(--citywest-blue-dark);text-decoration:none;font-weight:600}
+h1{font-size:26px;font-weight:600;margin:0 0 6px}
+.subtitle{color:var(--muted);font-size:13px;margin:0 0 28px}
+.doc-list{display:flex;flex-direction:column;gap:10px}
+.doc-row{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:14px 16px;box-shadow:0 8px 24px rgba(26,62,78,0.06)}
+.doc-icon{width:34px;height:34px;background:#eaf7fc;color:var(--citywest-blue);border-radius:8px;display:grid;place-items:center;font-size:16px;flex:none}
+.doc-info{flex:auto}
+.doc-info a{font-size:14px;font-weight:600;color:var(--ink);text-decoration:none}
+.doc-info a:hover{color:var(--citywest-blue-dark)}
+.doc-info p{margin:2px 0 0;font-size:11px;color:var(--muted)}
+.fav-btn{background:none;border:none;padding:2px;font-size:17px;line-height:1;color:#c3ced3;cursor:pointer;flex:none}
+.fav-btn:hover{color:#f0ad2f}
+.fav-btn.active{color:#f0ad2f}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <strong>CityWest</strong>
+    <div class="brand-div"></div>
+    <small>TSR resource portal</small>
+  </div>
+  <span class="pill">Internal use</span>
+</div>
+
+<div class="workspace">
+  <p class="breadcrumb"><a href="index.html">Home</a> / Troubleshooting steps</p>
+  <h1>Troubleshooting steps</h1>
+  <p class="subtitle">Step-by-step flows and reference documents for common connectivity issues.</p>
+
+  <div class="doc-list" id="docList">
+    <div class="doc-row">
+      <div class="doc-icon">📄</div>
+      <div class="doc-info">
+        <a href="iptv.html" class="doc-link" data-id="iptv" data-title="IPTV" data-desc="IPTV troubleshooting guide" data-url="iptv.html">IPTV</a>
+        <p>IPTV troubleshooting guide</p>
+      </div>
+      <button class="fav-btn" aria-label="Toggle favorite" data-id="iptv" data-title="IPTV" data-desc="IPTV troubleshooting guide" data-url="iptv.html">☆</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function getFavorites(){
+    try { return JSON.parse(localStorage.getItem('cw_favorites')) || []; }
+    catch(e){ return []; }
+  }
+  function setFavorites(list){ localStorage.setItem('cw_favorites', JSON.stringify(list)); }
+
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.fav-btn'));
+
+  function sync(){
+    var favs = getFavorites();
+    buttons.forEach(function(btn){
+      var on = favs.some(function(f){ return f.id === btn.getAttribute('data-id'); });
+      btn.classList.toggle('active', on);
+      btn.textContent = on ? '★' : '☆';
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id = btn.getAttribute('data-id');
+      var favs = getFavorites();
+      var idx = favs.findIndex(function(f){ return f.id === id; });
+      if(idx === -1){
+        favs.unshift({id:id, title:btn.getAttribute('data-title'), desc:btn.getAttribute('data-desc'), url:btn.getAttribute('data-url')});
+      } else {
+        favs.splice(idx, 1);
+      }
+      setFavorites(favs);
+      sync();
+    });
+  });
+
+  sync();
+
+  var RECENT_MAX = 8;
+  function addRecent(item){
+    var recent;
+    try { recent = JSON.parse(localStorage.getItem('cw_recent')) || []; }
+    catch(e){ recent = []; }
+    recent = recent.filter(function(f){ return f.id !== item.id; });
+    recent.unshift(item);
+    if(recent.length > RECENT_MAX){ recent = recent.slice(0, RECENT_MAX); }
+    localStorage.setItem('cw_recent', JSON.stringify(recent));
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.doc-link'), function(link){
+    link.addEventListener('click', function(){
+      addRecent({
+        id: link.getAttribute('data-id'),
+        title: link.getAttribute('data-title'),
+        desc: link.getAttribute('data-desc'),
+        url: link.getAttribute('data-url')
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

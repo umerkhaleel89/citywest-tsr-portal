@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IPTV troubleshooting guide — CityWest TSR Resource Portal</title>
+<style>
+:root{--citywest-blue:#128bc2;--citywest-blue-dark:#08719f;--citywest-navy:#083d59;--ink:#221e1f;--muted:#667681;--line:#dce5e9;--canvas:#f4f7f8;--panel:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",sans-serif;background:var(--canvas);color:var(--ink)}
+.topbar{background:linear-gradient(105deg,#073f5d 0%,#096f9f 52%,#128bc2 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,56px);min-height:76px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand strong{font-size:20px;font-style:italic}
+.brand-div{width:1px;height:26px;background:#ffffff40}
+.brand small{font-size:13px;font-weight:600}
+.pill{color:#ffffffd9;letter-spacing:.04em;text-transform:uppercase;border:1px solid #ffffff3d;border-radius:999px;padding:6px 12px;font-size:10px;font-weight:700}
+.workspace{max-width:920px;margin:0 auto;padding:32px clamp(20px,4vw,56px) 60px}
+.breadcrumb{font-size:12px;color:var(--muted);margin-bottom:16px}
+.breadcrumb a{color:var(--citywest-blue-dark);text-decoration:none;font-weight:600}
+h1{font-size:26px;font-weight:600;margin:0 0 6px}
+.subtitle{color:var(--muted);font-size:13px;margin:0 0 28px}
+.doc{border:1px solid var(--line);border-top:4px solid var(--citywest-blue);border-radius:9px;background:var(--panel);padding:8px 28px 32px;box-shadow:0 8px 24px rgba(26,62,78,0.06)}
+.doc h2{font-size:17px;font-weight:600;color:var(--citywest-navy);margin:36px 0 4px;padding-top:20px;border-top:1px solid var(--line)}
+.doc h2:first-of-type{border-top:none;padding-top:0;margin-top:24px}
+.doc p{font-size:13px;line-height:1.7;color:var(--ink);margin:8px 0}
+.doc ol{font-size:13px;line-height:1.8;color:var(--ink);margin:10px 0;padding-left:20px}
+.doc ul{font-size:13px;line-height:1.8;color:var(--ink);margin:10px 0;padding-left:20px}
+.doc strong{color:var(--citywest-navy)}
+table.quickref{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:12.5px}
+table.quickref th{text-align:left;background:#eaf7fc;color:var(--citywest-navy);padding:9px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+table.quickref td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+table.quickref a{color:var(--citywest-blue-dark);text-decoration:none;font-weight:600}
+table.quickref a:hover{text-decoration:underline}
+.diagram{background:var(--canvas);border:1px solid var(--line);border-radius:8px;padding:16px;margin:14px 0;overflow-x:auto}
+.diagram .mermaid{display:flex;justify-content:center}
+.escalate-note{background:#fff4e5;border:1px solid #f0c987;border-radius:8px;padding:14px 16px;margin-top:10px}
+.escalate-note p{margin:0 0 6px}
+.placeholder-note{margin-top:28px;font-size:11px;color:var(--muted);font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <strong>CityWest</strong>
+    <div class="brand-div"></div>
+    <small>TSR resource portal</small>
+  </div>
+  <span class="pill">Internal use</span>
+</div>
+
+<div class="workspace">
+  <p class="breadcrumb"><a href="index.html">Home</a> / <a href="troubleshooting-steps.html">Troubleshooting steps</a> / IPTV</p>
+  <h1>IPTV troubleshooting guide</h1>
+  <p class="subtitle">Reference guide for diagnosing common IPTV service issues reported by customers.</p>
+
+  <div class="doc">
+    <h2 style="border-top:none;padding-top:0;margin-top:24px">Quick reference</h2>
+    <table class="quickref">
+      <tr><th>Symptom</th><th>Likely cause</th><th>Jump to</th></tr>
+      <tr><td>No picture / black screen</td><td>Signal, HDMI, or set-top box power</td><td><a href="#no-signal">No signal</a></td></tr>
+      <tr><td>Buffering / spinning wheel</td><td>Bandwidth or Wi-Fi congestion</td><td><a href="#buffering">Buffering</a></td></tr>
+      <tr><td>Pixelation or blocky video</td><td>Signal strength or line noise</td><td><a href="#pixelation">Pixelation</a></td></tr>
+      <tr><td>Audio out of sync</td><td>HDMI handshake or app cache</td><td><a href="#audio-sync">Audio sync</a></td></tr>
+      <tr><td>App won't load / crashes</td><td>Firmware or account provisioning</td><td><a href="#app-issues">App issues</a></td></tr>
+    </table>
+
+    <h2 id="no-signal">No signal / black screen</h2>
+    <p>Start with the physical layer before touching software.</p>
+    <div class="diagram"><pre class="mermaid">
+flowchart TD
+    A[Customer reports black screen] --> B{Set-top box powered on?}
+    B -- No --> C[Check power cable and outlet]
+    B -- Yes --> D{HDMI cable connected and TV on correct input?}
+    D -- No --> E[Reseat HDMI, confirm input source]
+    D -- Yes --> F{Set-top box shows any lights?}
+    F -- No lights --> G[Suspect hardware failure, arrange replacement]
+    F -- Lights but no picture --> H[Reboot set-top box]
+    H --> I{Signal restored?}
+    I -- No --> J[Check coax connection and signal levels]
+    I -- Yes --> K[Resolved]
+    J --> L{Signal levels within spec?}
+    L -- No --> M[Escalate to plant/line technician]
+    L -- Yes --> N[Re-provision set-top box remotely]
+    </pre></div>
+    <p><strong>Steps:</strong></p>
+    <ol>
+      <li>Confirm the set-top box has power (LED indicator lit).</li>
+      <li>Confirm HDMI is seated and the TV is on the correct input.</li>
+      <li>Power-cycle the set-top box (unplug 10 seconds, plug back in).</li>
+      <li>Check coax signal levels in the provisioning tool.</li>
+      <li>If levels are out of spec, escalate to a line technician rather than continuing software troubleshooting.</li>
+    </ol>
+
+    <h2 id="buffering">Buffering / freezing</h2>
+    <p>Almost always a bandwidth problem, not a set-top box problem.</p>
+    <div class="diagram"><pre class="mermaid">
+flowchart TD
+    A[Customer reports buffering] --> B{Wired or Wi-Fi connection?}
+    B -- Wi-Fi --> C[Run speed test on affected device]
+    B -- Wired --> D[Check modem/router uptime and sync levels]
+    C --> E{Speed below plan minimum?}
+    E -- Yes --> F[Check for Wi-Fi congestion or interference]
+    E -- No --> G[Check for other devices saturating bandwidth]
+    F --> H[Recommend wired connection or Wi-Fi extender]
+    G --> I[Advise on bandwidth prioritization / QoS]
+    D --> J{Modem shows uncorrectable errors?}
+    J -- Yes --> K[Escalate to line technician]
+    J -- No --> L[Reboot modem and set-top box]
+    </pre></div>
+    <p><strong>Steps:</strong></p>
+    <ol>
+      <li>Ask whether the affected TV is wired or on Wi-Fi.</li>
+      <li>For Wi-Fi, run a speed test on a device near the affected TV.</li>
+      <li>Check the modem's sync levels and error counts for line issues.</li>
+      <li>Rule out other bandwidth-heavy devices on the network (streaming, gaming, downloads).</li>
+      <li>Reboot modem, then set-top box, in that order.</li>
+    </ol>
+
+    <h2 id="pixelation">Pixelation / picture quality</h2>
+    <div class="diagram"><pre class="mermaid">
+flowchart LR
+    A[Pixelation reported] --> B[Check signal levels]
+    B --> C{Levels in spec?}
+    C -- No --> D[Escalate to line technician]
+    C -- Yes --> E[Check for loose splitters or old coax]
+    E --> F[Replace splitter or cable if corroded]
+    F --> G{Issue persists?}
+    G -- Yes --> H[Swap set-top box]
+    G -- No --> I[Resolved]
+    </pre></div>
+    <p><strong>Common causes:</strong> corroded connectors, too many splitters between the tap and the box, damaged coax, or marginal signal levels that only show up under load.</p>
+
+    <h2 id="audio-sync">Audio out of sync</h2>
+    <ol>
+      <li>Power-cycle the set-top box first — this resolves most HDMI handshake issues.</li>
+      <li>If using a soundbar or AV receiver, check for an audio processing delay setting and adjust.</li>
+      <li>Confirm the TV isn't applying its own post-processing (motion smoothing / game mode can introduce lag).</li>
+      <li>If sync drifts progressively during playback (rather than a fixed offset), suspect a decoder issue on the set-top box — replace the unit.</li>
+    </ol>
+
+    <h2 id="app-issues">App won't load or crashes</h2>
+    <div class="diagram"><pre class="mermaid">
+flowchart TD
+    A[App fails to load] --> B{Firmware up to date?}
+    B -- No --> C[Push firmware update]
+    B -- Yes --> D{Account shows active provisioning?}
+    D -- No --> E[Re-provision account/package]
+    D -- Yes --> F[Clear app cache / factory reset box]
+    F --> G{Resolved?}
+    G -- No --> H[Escalate to Tier 2]
+    G -- Yes --> I[Resolved]
+    </pre></div>
+    <p><strong>Steps:</strong></p>
+    <ol>
+      <li>Confirm the set-top box firmware is current.</li>
+      <li>Confirm the customer's account and package are active and correctly provisioned.</li>
+      <li>Clear the app's cache, or perform a factory reset as a last resort before escalating.</li>
+      <li>Escalate to Tier 2 if the issue persists after a reset — this usually indicates a server-side or licensing problem outside the TSR's control.</li>
+    </ol>
+
+    <h2>When to escalate</h2>
+    <div class="escalate-note">
+      <p>Escalate immediately, without further troubleshooting, if:</p>
+      <ul>
+        <li>Signal levels are out of spec at the tap (line issue, not customer premise)</li>
+        <li>The set-top box shows no lights after a confirmed power source</li>
+        <li>Multiple customers in the same service area report the same symptom (possible node-level outage)</li>
+      </ul>
+    </div>
+
+    <p class="placeholder-note">This is placeholder/sample content generated for portal testing purposes — replace with verified internal procedures before publishing.</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  if(window.mermaid){ mermaid.initialize({ startOnLoad: true, theme: 'neutral' }); }
+</script>
+<script>
+(function(){
+  var RECENT_MAX = 8;
+  var recent;
+  try { recent = JSON.parse(localStorage.getItem('cw_recent')) || []; }
+  catch(e){ recent = []; }
+  recent = recent.filter(function(f){ return f.id !== 'iptv'; });
+  recent.unshift({id:'iptv', title:'IPTV', desc:'IPTV troubleshooting guide', url:'iptv.html'});
+  if(recent.length > RECENT_MAX){ recent = recent.slice(0, RECENT_MAX); }
+  localStorage.setItem('cw_recent', JSON.stringify(recent));
+})();
+</script>
+
+</body>
+</html>

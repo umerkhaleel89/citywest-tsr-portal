@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Customer de-escalation — CityWest TSR Resource Portal</title>
+<style>
+:root{--citywest-blue:#128bc2;--citywest-blue-dark:#08719f;--citywest-navy:#083d59;--ink:#221e1f;--muted:#667681;--line:#dce5e9;--canvas:#f4f7f8;--panel:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",sans-serif;background:var(--canvas);color:var(--ink)}
+.topbar{background:linear-gradient(105deg,#073f5d 0%,#096f9f 52%,#128bc2 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,56px);min-height:76px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand strong{font-size:20px;font-style:italic}
+.brand-div{width:1px;height:26px;background:#ffffff40}
+.brand small{font-size:13px;font-weight:600}
+.pill{color:#ffffffd9;letter-spacing:.04em;text-transform:uppercase;border:1px solid #ffffff3d;border-radius:999px;padding:6px 12px;font-size:10px;font-weight:700}
+.workspace{max-width:920px;margin:0 auto;padding:32px clamp(20px,4vw,56px) 60px}
+.breadcrumb{font-size:12px;color:var(--muted);margin-bottom:16px}
+.breadcrumb a{color:var(--citywest-blue-dark);text-decoration:none;font-weight:600}
+h1{font-size:26px;font-weight:600;margin:0 0 6px}
+.subtitle{color:var(--muted);font-size:13px;margin:0 0 28px}
+.doc{border:1px solid var(--line);border-top:4px solid var(--citywest-blue);border-radius:9px;background:var(--panel);padding:8px 28px 32px;box-shadow:0 8px 24px rgba(26,62,78,0.06)}
+.doc h2{font-size:17px;font-weight:600;color:var(--citywest-navy);margin:32px 0 4px;padding-top:20px;border-top:1px solid var(--line)}
+.doc h2:first-of-type{border-top:none;padding-top:0;margin-top:24px}
+.doc p{font-size:13px;line-height:1.7;color:var(--ink);margin:8px 0}
+.doc ul{font-size:13px;line-height:1.8;color:var(--ink);margin:10px 0;padding-left:20px}
+.doc strong{color:var(--citywest-navy)}
+.diagram{background:var(--canvas);border:1px solid var(--line);border-radius:8px;padding:16px;margin:14px 0;overflow-x:auto}
+.diagram .mermaid{display:flex;justify-content:center}
+.escalate-note{background:#fff4e5;border:1px solid #f0c987;border-radius:8px;padding:14px 16px;margin-top:10px}
+.escalate-note p{margin:0 0 6px}
+.placeholder-note{margin-top:28px;font-size:11px;color:var(--muted);font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <strong>CityWest</strong>
+    <div class="brand-div"></div>
+    <small>TSR resource portal</small>
+  </div>
+  <span class="pill">Internal use</span>
+</div>
+
+<div class="workspace">
+  <p class="breadcrumb"><a href="index.html">Home</a> / <a href="best-service-practices.html">Best service practices</a> / Customer de-escalation</p>
+  <h1>Customer de-escalation</h1>
+  <p class="subtitle">Guidance for handling frustrated or upset customers before a situation requires formal escalation.</p>
+
+  <div class="doc">
+    <h2 style="border-top:none;padding-top:0;margin-top:24px">Recognize escalation triggers early</h2>
+    <p>Common signs a call is heading toward frustration:</p>
+    <ul>
+      <li>Raised voice, interruptions, or talking over you</li>
+      <li>Repeating the same complaint multiple times</li>
+      <li>Mentioning prior calls that didn't resolve the issue</li>
+      <li>Explicit statements like "this is ridiculous" or "I want to cancel"</li>
+    </ul>
+    <p>Catching these early makes de-escalation far easier than waiting until the customer is already angry.</p>
+
+    <h2>Core approach</h2>
+    <div class="diagram"><pre class="mermaid">
+flowchart TD
+    A[Customer shows frustration] --> B[Acknowledge the emotion, not just the issue]
+    B --> C[Let them finish without interrupting]
+    C --> D{Do you understand the core complaint?}
+    D -- No --> E[Ask one clarifying question, then restate it back]
+    D -- Yes --> F[State what you're going to do about it]
+    F --> G{Customer calms down?}
+    G -- Yes --> H[Proceed with resolution]
+    G -- No --> I[Offer a supervisor or callback, don't argue]
+    </pre></div>
+
+    <h2>What to say</h2>
+    <ul>
+      <li><strong>Acknowledge before problem-solving.</strong> "I hear you — you've called about this twice now and it's still not fixed. That's frustrating, and I want to get this actually resolved today."</li>
+      <li><strong>Don't argue the facts mid-frustration.</strong> Even if the customer is factually wrong about something, correct it gently after they've been heard, not while they're still venting.</li>
+      <li><strong>Use their name and stay calm.</strong> A steady, unhurried tone does more to de-escalate than any specific phrase.</li>
+      <li><strong>Avoid corporate-sounding deflection.</strong> Phrases like "I understand your frustration" said flatly can feel dismissive — pair it with something specific to their situation.</li>
+    </ul>
+
+    <h2>What not to do</h2>
+    <ul>
+      <li>Don't match their tone or raise your own voice.</li>
+      <li>Don't say "calm down" — it almost never works and often escalates further.</li>
+      <li>Don't make promises you can't keep just to end the call peacefully.</li>
+      <li>Don't rush to transfer before attempting to resolve — an unnecessary transfer often re-triggers the frustration with the next person.</li>
+    </ul>
+
+    <h2>When to involve a supervisor</h2>
+    <div class="escalate-note">
+      <p>Loop in a supervisor when:</p>
+      <ul>
+        <li>The customer explicitly requests one.</li>
+        <li>The customer is threatening to cancel service and you've exhausted standard retention/resolution steps.</li>
+        <li>The conversation includes abusive language directed at you personally (see below).</li>
+        <li>You've offered a fair resolution twice and the customer rejects both, with no path forward.</li>
+      </ul>
+    </div>
+
+    <h2>Handling abusive language</h2>
+    <ul>
+      <li>You're not required to remain on a call where a customer is using abusive, threatening, or discriminatory language toward you.</li>
+      <li>Give one clear, calm warning: "I want to help you, but I need us to keep this respectful. If that continues, I'll need to end the call."</li>
+      <li>If it continues, disengage per your team's standard process and document the call accurately, including direct quotes where possible.</li>
+    </ul>
+
+    <h2>After the call</h2>
+    <ul>
+      <li>Log what triggered the frustration, not just the technical issue — this helps identify systemic problems (e.g. repeat callers on the same unresolved issue).</li>
+      <li>If a supervisor was looped in, make sure the handoff notes are clear so the customer doesn't have to repeat their story from scratch.</li>
+    </ul>
+
+    <p class="placeholder-note">This is placeholder/sample content generated for portal testing purposes — replace with verified internal standards before publishing.</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  if(window.mermaid){ mermaid.initialize({ startOnLoad: true, theme: 'neutral' }); }
+</script>
+<script>
+(function(){
+  var RECENT_MAX = 8;
+  var recent;
+  try { recent = JSON.parse(localStorage.getItem('cw_recent')) || []; }
+  catch(e){ recent = []; }
+  recent = recent.filter(function(f){ return f.id !== 'customer-deescalation'; });
+  recent.unshift({id:'customer-deescalation', title:'Customer de-escalation', desc:'Handling frustrated customers before formal escalation', url:'customer-deescalation.html'});
+  if(recent.length > RECENT_MAX){ recent = recent.slice(0, RECENT_MAX); }
+  localStorage.setItem('cw_recent', JSON.stringify(recent));
+})();
+</script>
+
+</body>
+</html>

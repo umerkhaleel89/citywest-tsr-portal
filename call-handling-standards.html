@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Call handling standards — CityWest TSR Resource Portal</title>
+<style>
+:root{--citywest-blue:#128bc2;--citywest-blue-dark:#08719f;--citywest-navy:#083d59;--ink:#221e1f;--muted:#667681;--line:#dce5e9;--canvas:#f4f7f8;--panel:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",sans-serif;background:var(--canvas);color:var(--ink)}
+.topbar{background:linear-gradient(105deg,#073f5d 0%,#096f9f 52%,#128bc2 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,56px);min-height:76px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand strong{font-size:20px;font-style:italic}
+.brand-div{width:1px;height:26px;background:#ffffff40}
+.brand small{font-size:13px;font-weight:600}
+.pill{color:#ffffffd9;letter-spacing:.04em;text-transform:uppercase;border:1px solid #ffffff3d;border-radius:999px;padding:6px 12px;font-size:10px;font-weight:700}
+.workspace{max-width:920px;margin:0 auto;padding:32px clamp(20px,4vw,56px) 60px}
+.breadcrumb{font-size:12px;color:var(--muted);margin-bottom:16px}
+.breadcrumb a{color:var(--citywest-blue-dark);text-decoration:none;font-weight:600}
+h1{font-size:26px;font-weight:600;margin:0 0 6px}
+.subtitle{color:var(--muted);font-size:13px;margin:0 0 28px}
+.doc{border:1px solid var(--line);border-top:4px solid var(--citywest-blue);border-radius:9px;background:var(--panel);padding:8px 28px 32px;box-shadow:0 8px 24px rgba(26,62,78,0.06)}
+.doc h2{font-size:17px;font-weight:600;color:var(--citywest-navy);margin:32px 0 4px;padding-top:20px;border-top:1px solid var(--line)}
+.doc h2:first-of-type{border-top:none;padding-top:0;margin-top:24px}
+.doc p{font-size:13px;line-height:1.7;color:var(--ink);margin:8px 0}
+.doc ul{font-size:13px;line-height:1.8;color:var(--ink);margin:10px 0;padding-left:20px}
+.doc strong{color:var(--citywest-navy)}
+.doc blockquote{background:var(--canvas);border-left:3px solid var(--citywest-blue);border-radius:0 6px 6px 0;margin:12px 0;padding:10px 16px;font-size:12.5px;font-style:italic;color:var(--ink)}
+.placeholder-note{margin-top:28px;font-size:11px;color:var(--muted);font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <strong>CityWest</strong>
+    <div class="brand-div"></div>
+    <small>TSR resource portal</small>
+  </div>
+  <span class="pill">Internal use</span>
+</div>
+
+<div class="workspace">
+  <p class="breadcrumb"><a href="index.html">Home</a> / <a href="best-service-practices.html">Best service practices</a> / Call handling standards</p>
+  <h1>Call handling standards</h1>
+  <p class="subtitle">Baseline expectations for how TSRs open, manage, and close customer calls.</p>
+
+  <div class="doc">
+    <h2 style="border-top:none;padding-top:0;margin-top:24px">Opening the call</h2>
+    <ul>
+      <li>Answer within the target hold time and greet with your name and department.</li>
+      <li>Confirm the account holder's identity before discussing account details.</li>
+      <li>Set expectations early: briefly restate the customer's issue back to them so they know you understood it correctly.</li>
+    </ul>
+    <p><strong>Example opening:</strong></p>
+    <blockquote>"Thanks for holding, this is [name] with CityWest technical support. Just to confirm, you're seeing buffering on your living room TV since last night — is that right?"</blockquote>
+
+    <h2>During the call</h2>
+    <ul>
+      <li><strong>Own the call.</strong> Avoid unnecessary transfers; attempt standard troubleshooting before considering escalation.</li>
+      <li><strong>Narrate what you're doing.</strong> Silence during diagnostics reads as inattention — tell the customer what you're checking and why.</li>
+      <li><strong>Set time expectations.</strong> If a step will take a few minutes (e.g. a modem reboot), say so upfront.</li>
+      <li><strong>Avoid jargon.</strong> Say "signal strength" instead of "SNR," describe steps in plain terms.</li>
+      <li><strong>One issue at a time.</strong> If a customer raises a second, unrelated issue mid-call, acknowledge it and address it after resolving the first, rather than troubleshooting both simultaneously.</li>
+    </ul>
+
+    <h2>Hold procedure</h2>
+    <ul>
+      <li>Ask permission before placing a customer on hold, and give a reason ("I need about two minutes to check your line levels").</li>
+      <li>Check back in every 60–90 seconds if a hold runs longer than expected.</li>
+      <li>Thank the customer for their patience when returning.</li>
+    </ul>
+
+    <h2>Closing the call</h2>
+    <ul>
+      <li>Confirm the original issue is resolved from the customer's perspective, not just from the system's.</li>
+      <li>Summarize any follow-up actions (e.g. a technician visit, a callback, a firmware update rolling out).</li>
+      <li>Provide a reference/ticket number if one was created.</li>
+      <li>Ask if there's anything else before ending the call.</li>
+    </ul>
+    <p><strong>Example closing:</strong></p>
+    <blockquote>"So to recap, I've reset your set-top box and confirmed your signal levels are healthy — you should see clear picture going forward. If it happens again, reference ticket #12345. Anything else I can help with today?"</blockquote>
+
+    <h2>Documentation standards</h2>
+    <ul>
+      <li>Log every call, even if resolved quickly, with the specific symptom and the resolution steps taken.</li>
+      <li>Use consistent terminology so other TSRs and Tier 2 can follow the history without guessing.</li>
+      <li>Note signal levels, error counts, or other diagnostic readings at the time of the call — not just "checked signal, looked fine."</li>
+    </ul>
+
+    <h2>What to avoid</h2>
+    <ul>
+      <li>Guessing at a cause without checking it (e.g. blaming Wi-Fi without running a speed test).</li>
+      <li>Placing a customer on hold without explanation.</li>
+      <li>Ending a call before confirming the customer's issue is actually resolved.</li>
+      <li>Promising a fix timeline you can't confirm (e.g. "it'll be fixed by tomorrow" for a line issue you haven't escalated yet).</li>
+    </ul>
+
+    <p class="placeholder-note">This is placeholder/sample content generated for portal testing purposes — replace with verified internal standards before publishing.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var RECENT_MAX = 8;
+  var recent;
+  try { recent = JSON.parse(localStorage.getItem('cw_recent')) || []; }
+  catch(e){ recent = []; }
+  recent = recent.filter(function(f){ return f.id !== 'call-handling-standards'; });
+  recent.unshift({id:'call-handling-standards', title:'Call handling standards', desc:'Opening, managing, and closing customer calls', url:'call-handling-standards.html'});
+  if(recent.length > RECENT_MAX){ recent = recent.slice(0, RECENT_MAX); }
+  localStorage.setItem('cw_recent', JSON.stringify(recent));
+})();
+</script>
+
+</body>
+</html>
